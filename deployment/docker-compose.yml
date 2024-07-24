@@ -1,0 +1,27 @@
+
+services:
+  kafka:
+    container_name: mp_kafka
+    image: apache/kafka
+    ports:
+      - "9092:9092"
+
+  postgres:
+    container_name: mp_postgres
+    image: postgres:15.4-alpine
+    env_file:
+      - db.env
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  migrator:
+    container_name: mp_migrator
+    depends_on:
+      - postgres
+    env_file:
+      - migrator.env
+    build:
+      context: ../
+      dockerfile: ./migrations/Dockerfile
