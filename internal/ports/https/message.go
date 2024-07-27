@@ -1,4 +1,4 @@
-package handlers
+package https
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 
 	"github.com/thirteenths/message-processing-microservice/internal/app"
 	"github.com/thirteenths/message-processing-microservice/internal/domains/request"
+	_ "github.com/thirteenths/message-processing-microservice/internal/domains/response"
 )
 
 type ApiHandler struct {
@@ -33,7 +34,7 @@ func (h *ApiHandler) CreateMessage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 
-	res, err := h.messageService.CreateMessage()
+	res, err := h.messageService.CreateMessage(req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -51,7 +52,7 @@ func (h *ApiHandler) CreateMessage(w http.ResponseWriter, r *http.Request) {
 // @Tags         messageService
 // @Accept       json
 // @Produce      json
-// @Success      200  {string}  string    "ok"
+// @Success      200  {object}  response.GetStatistic
 // @Failure      400  {string}  string    "bad request"
 // @Failure      500  {string}  string    "internal server error"
 // @Router       /statistic [get]

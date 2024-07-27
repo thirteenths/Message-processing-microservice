@@ -1,0 +1,73 @@
+basePath: /api/
+definitions:
+  github_com_thirteenths_message-processing-microservice_internal_domains_request.CreateMessage:
+    properties:
+      text:
+        type: string
+    type: object
+  github_com_thirteenths_message-processing-microservice_internal_domains_response.GetStatistic:
+    properties:
+      count:
+        type: integer
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: This is backend server for test task 2024.
+  title: Message processing microservice
+  version: "1.0"
+paths:
+  /messageService:
+    post:
+      consumes:
+      - application/json
+      description: Create messageService
+      parameters:
+      - description: Add messageService
+        in: body
+        name: request.CreateMessage
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_thirteenths_message-processing-microservice_internal_domains_request.CreateMessage'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal server error
+          schema:
+            type: string
+      summary: CreateMessage
+      tags:
+      - messageService
+  /statistic:
+    get:
+      consumes:
+      - application/json
+      description: Get statistic
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_thirteenths_message-processing-microservice_internal_domains_response.GetStatistic'
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal server error
+          schema:
+            type: string
+      summary: GetStatistic
+      tags:
+      - messageService
+swagger: "2.0"

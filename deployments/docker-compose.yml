@@ -1,0 +1,53 @@
+version: '2'
+
+services:
+  kafka:
+    container_name: mp_kafka
+    image: apache/kafka
+    ports:
+      - "9092:9092"
+
+  postgres:
+    container_name: mp_postgres
+    image: postgres:15.4-alpine
+    env_file:
+      - db.env
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  migrator:
+    container_name: mp_migrator
+    depends_on:
+      - postgres
+    env_file:
+      - migrator.env
+    build:
+      context: ../
+      dockerfile: ./migrations/Dockerfile
+
+  app:
+    container_name: mp_app
+    depends_on:
+      - postgres
+      - kafka
+    env_file:
+      - app.env
+    build:
+      context: ../
+      dockerfile: ./cmd/api/Dockerfile
+    ports:
+      - "3000:3000"
+
+  kafka-ui:
+    container_name: mp_kafka-ui
+    depends_on:
+      - kafka
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8080:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
+    volumes:
+      - ~/kui/config.yml:/etc/kafkaui/dynamic_config.yaml

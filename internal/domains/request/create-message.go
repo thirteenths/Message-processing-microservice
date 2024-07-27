@@ -1,5 +1,5 @@
 package request
 
 type CreateMessage struct {
-	Text string
+	Text string `json:"message"`
 }
