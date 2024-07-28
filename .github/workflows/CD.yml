@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      SERVER: ${{ secret.SERVER }}
+      SERVER: ${{ secrets.SERVER }}
     steps:
       - uses: actions/checkout@v3
 
