@@ -12,6 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Copy files
-        run: ssh -i "$SERVER" "$SSH_PRIVATE_KEY"
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: whoami
 
