@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SERVER: ${{ secret.SERVER }}
     steps:
       - uses: actions/checkout@v3
 
       - name: Copy files
-        run: scp . "$SSH_PRIVATE_KEY":/.
+        run: ssh -i "$SERVER" "$SSH_PRIVATE_KEY"
 
