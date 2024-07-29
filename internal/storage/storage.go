@@ -26,6 +26,18 @@ func (s *storage) CreateMessage(ctx context.Context, msg domains.Message) (int, 
 	return s.p.CreateMessage(ctx, msg)
 }
 
-func (s *storage) WriteMessages(ctx context.Context, msg domains.Message) error {
-	return s.k.WriteMessages(ctx, msg)
+func (s *storage) WriteMessage(ctx context.Context, msg domains.Message) error {
+	return s.k.WriteMessage(ctx, msg)
+}
+
+func (s *storage) ReadMessage(ctx context.Context) (domains.Message, error) {
+	return s.k.ReadMessage(ctx)
+}
+
+func (s *storage) UpdateStatusMessage(ctx context.Context, message domains.Message) error {
+	return s.p.UpdateStatusMessage(ctx, message)
+}
+
+func (s *storage) CheckReadMessage(ctx context.Context) (bool, error) {
+	return s.k.CheckReadMessage(ctx)
 }

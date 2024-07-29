@@ -46,6 +46,19 @@ func (h *ApiHandler) CreateMessage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (h *ApiHandler) GetMessage(w http.ResponseWriter, r *http.Request) {
+	res, err := h.messageService.GetMessage()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(res); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
 // GetStatistic
 // @Summary      GetStatistic
 // @Description  Get statistic

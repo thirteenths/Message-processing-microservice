@@ -10,6 +10,7 @@ import (
 
 type Postgres interface {
 	CreateMessage(_ context.Context, message domains.Message) (int, error)
+	UpdateStatusMessage(ctx context.Context, message domains.Message) error
 }
 
 type messageStorage struct {
@@ -37,4 +38,15 @@ func (s *messageStorage) CreateMessage(ctx context.Context, message domains.Mess
 		return -1, err
 	}
 	return id, err
+}
+
+const queryUpdateStatusMessage = "UPDATE MESSAGE SET STATUS = TRUE WHERE KEY = $1 "
+
+func (s *messageStorage) UpdateStatusMessage(ctx context.Context, message domains.Message) error {
+	_, err := s.conn.Exec(queryUpdateStatusMessage, message.Key)
+	if err != nil {
+		err = errors.WithMessage(err, "failed to update status message")
+	}
+
+	return err
 }

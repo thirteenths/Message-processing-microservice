@@ -26,3 +26,9 @@ func MakeResponseCreateMessage(m domains.Message) *response.CreateMessage {
 		Id: m.ID,
 	}
 }
+
+func MakeResponseGetMessage(m domains.Message) *response.GetMessage {
+	return &response.GetMessage{
+		Message: m.Text,
+	}
+}
