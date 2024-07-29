@@ -41,3 +41,11 @@ func (s *storage) UpdateStatusMessage(ctx context.Context, message domains.Messa
 func (s *storage) CheckReadMessage(ctx context.Context) (bool, error) {
 	return s.k.CheckReadMessage(ctx)
 }
+
+func (s *storage) GetCountMessage(ctx context.Context) (count int, err error) {
+	return s.p.GetCountMessage(ctx)
+}
+
+func (s *storage) GetProcessingCountMessage(ctx context.Context) (count int, err error) {
+	return s.p.GetProcessingCountMessage(ctx)
+}

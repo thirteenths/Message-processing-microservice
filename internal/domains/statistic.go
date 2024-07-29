@@ -1,5 +1,6 @@
 package domains
 
 type Statistic struct {
-	Count int `json:"count"`
+	AllCount          int `json:"all_count"`
+	NotProcessesCount int `json:"not_processes_count"`
 }

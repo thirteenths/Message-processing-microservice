@@ -27,7 +27,7 @@ func NewApiHandler(message app.MessageService) *ApiHandler {
 // @Success      201  {string}  string    "ok"
 // @Failure      400  {string}  string    "bad request"
 // @Failure      500  {string}  string    "internal server error"
-// @Router       /messageService [post]
+// @Router       /message [post]
 func (h *ApiHandler) CreateMessage(w http.ResponseWriter, r *http.Request) {
 	var req request.CreateMessage
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -46,6 +46,16 @@ func (h *ApiHandler) CreateMessage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// GetMessage
+// @Summary      GetMessage
+// @Description  Get message
+// @Tags         messageService
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  response.GetMessage
+// @Failure      400  {string}  string    "bad request"
+// @Failure      500  {string}  string    "internal server error"
+// @Router       /message [get]
 func (h *ApiHandler) GetMessage(w http.ResponseWriter, r *http.Request) {
 	res, err := h.messageService.GetMessage()
 	if err != nil {

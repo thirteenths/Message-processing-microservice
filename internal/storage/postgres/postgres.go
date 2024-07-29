@@ -11,6 +11,8 @@ import (
 type Postgres interface {
 	CreateMessage(_ context.Context, message domains.Message) (int, error)
 	UpdateStatusMessage(ctx context.Context, message domains.Message) error
+	GetCountMessage(ctx context.Context) (count int, err error)
+	GetProcessingCountMessage(ctx context.Context) (count int, err error)
 }
 
 type messageStorage struct {
@@ -49,4 +51,28 @@ func (s *messageStorage) UpdateStatusMessage(ctx context.Context, message domain
 	}
 
 	return err
+}
+
+const queryGetCountMessage = "SELECT COUNT(STATUS) FROM MESSAGE"
+
+func (s *messageStorage) GetCountMessage(ctx context.Context) (count int, err error) {
+	err = s.conn.QueryRow(queryGetCountMessage).Scan(&count)
+	if err != nil {
+		err = errors.WithMessage(err, "failed to query count message")
+		return 0, err
+	}
+
+	return count, err
+}
+
+const queryGetProcessingCountMessage = "SELECT COUNT(STATUS) FROM MESSAGE WHERE STATUS = FALSE"
+
+func (s *messageStorage) GetProcessingCountMessage(ctx context.Context) (count int, err error) {
+	err = s.conn.QueryRow(queryGetProcessingCountMessage).Scan(&count)
+	if err != nil {
+		err = errors.WithMessage(err, "failed to query count message")
+		return 0, err
+	}
+
+	return count, err
 }

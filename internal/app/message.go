@@ -60,5 +60,15 @@ func (s *MessageService) GetMessage() (response.GetMessage, error) {
 }
 
 func (s *MessageService) GetStatistic() (response.GetStatistic, error) {
-	return response.GetStatistic{Count: 2}, nil
+	allCountMessage, err := s.storage.GetCountMessage(context.Background())
+	if err != nil {
+		return response.GetStatistic{}, err
+	}
+
+	processingCountMessage, err := s.storage.GetProcessingCountMessage(context.Background())
+	if err != nil {
+		return response.GetStatistic{}, err
+	}
+
+	return response.GetStatistic{AllCountMessage: allCountMessage, ProcessingCountMessage: processingCountMessage}, nil
 }

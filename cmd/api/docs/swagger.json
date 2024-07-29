@@ -6,10 +6,43 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:3000",
+    "host": "localhost:8080",
     "basePath": "/api/",
     "paths": {
-        "/messageService": {
+        "/message": {
+            "get": {
+                "description": "Get message",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messageService"
+                ],
+                "summary": "GetMessage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_thirteenths_message-processing-microservice_internal_domains_response.GetMessage"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Create messageService",
                 "consumes": [
@@ -95,7 +128,15 @@
         "github_com_thirteenths_message-processing-microservice_internal_domains_request.CreateMessage": {
             "type": "object",
             "properties": {
-                "text": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_thirteenths_message-processing-microservice_internal_domains_response.GetMessage": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }
@@ -103,7 +144,10 @@
         "github_com_thirteenths_message-processing-microservice_internal_domains_response.GetStatistic": {
             "type": "object",
             "properties": {
-                "count": {
+                "allCountMessage": {
+                    "type": "integer"
+                },
+                "processingCountMessage": {
                     "type": "integer"
                 }
             }

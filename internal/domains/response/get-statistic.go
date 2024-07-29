@@ -1,5 +1,6 @@
 package response
 
 type GetStatistic struct {
-	Count int
+	AllCountMessage        int
+	ProcessingCountMessage int
 }

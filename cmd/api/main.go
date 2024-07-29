@@ -5,6 +5,8 @@ import (
 	log "github.com/sirupsen/logrus"
 	httpSwagger "github.com/swaggo/http-swagger"
 
+	_ "github.com/thirteenths/message-processing-microservice/cmd/api/docs"
+
 	"net/http"
 	"os"
 	"time"
@@ -20,7 +22,7 @@ import (
 // @version         1.0
 // @description     This is backend server for test task 2024.
 
-// @host      localhost:8080
+// @host      localhost:3000
 // @BasePath  /api/
 
 func main() {
@@ -45,6 +47,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Post("/api/message", handler.CreateMessage)
 	r.Get("/api/statistic", handler.GetStatistic)
+	r.Get("/api/message", handler.GetMessage)
 
 	r.Get("/api/docs/*", httpSwagger.WrapHandler)
 

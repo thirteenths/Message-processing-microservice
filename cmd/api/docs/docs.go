@@ -15,7 +15,40 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/messageService": {
+        "/message": {
+            "get": {
+                "description": "Get message",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "messageService"
+                ],
+                "summary": "GetMessage",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_thirteenths_message-processing-microservice_internal_domains_response.GetMessage"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Create messageService",
                 "consumes": [
@@ -101,7 +134,15 @@ const docTemplate = `{
         "github_com_thirteenths_message-processing-microservice_internal_domains_request.CreateMessage": {
             "type": "object",
             "properties": {
-                "text": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_thirteenths_message-processing-microservice_internal_domains_response.GetMessage": {
+            "type": "object",
+            "properties": {
+                "message": {
                     "type": "string"
                 }
             }
@@ -109,7 +150,10 @@ const docTemplate = `{
         "github_com_thirteenths_message-processing-microservice_internal_domains_response.GetStatistic": {
             "type": "object",
             "properties": {
-                "count": {
+                "allCountMessage": {
+                    "type": "integer"
+                },
+                "processingCountMessage": {
                     "type": "integer"
                 }
             }
@@ -120,7 +164,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:3000",
+	Host:             "localhost:8080",
 	BasePath:         "/api/",
 	Schemes:          []string{},
 	Title:            "Message processing microservice",

@@ -1,4 +1,3 @@
-version: '2'
 
 services:
   kafka:
@@ -40,14 +39,3 @@ services:
     ports:
       - "3000:3000"
 
-  kafka-ui:
-    container_name: mp_kafka-ui
-    depends_on:
-      - kafka
-    image: provectuslabs/kafka-ui:latest
-    ports:
-      - "8080:8080"
-    environment:
-      DYNAMIC_CONFIG_ENABLED: 'true'
-    volumes:
-      - ~/kui/config.yml:/etc/kafkaui/dynamic_config.yaml
