@@ -32,4 +32,5 @@ jobs:
           script: |
             cd deployments
             sudo docker compose up --build -d
+            sudo docker compose up --build -d migrator
 
